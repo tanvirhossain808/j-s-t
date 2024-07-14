@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -15,19 +15,64 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+*/
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  /* background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb)); */
+  background-color: black;
+  font-family: MontserratAlternates;
+  color: white;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.tooltip {
+  transition: .3s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tooltip::after {
+  content: "";
+  visibility: visible;
+  opacity: 1;
+  position: absolute;
+  border: 4px solid black;
+  top: 40%;
+  right: 103%;
+  transform: translateX(100%) rotateZ(45deg);
+  z-index: -1;
+
+}
+
+.tooltipContainer:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+@font-face {
+  font-family: 'MontserratAlternates';
+  src: local('MontserratAlternates'),
+    url('/fonts/MontserratAlternates/MontserratAlternates-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MontserratAlternates-bold';
+  src: local('MontserratAlternates-bold'),
+    url('/fonts/MontserratAlternates/MontserratAlternates-Bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }

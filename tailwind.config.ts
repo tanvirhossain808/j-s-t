@@ -13,6 +13,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        "MontserratAlternates": ["MontserratAlternates", "sans-serif"],
+        "MontserratAlternates-Bold": ["MontserratAlternates-Bold", "sans-serif"]
+      },
+      gridTemplateColumns: {
+        "auto": 'repeat(auto-fill, minmax(300px, 1fr))'
+      }
     },
   },
   plugins: [],
