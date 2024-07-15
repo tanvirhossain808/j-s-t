@@ -76,3 +76,12 @@ html {
   font-weight: normal;
   font-style: normal;
 }
+
+.like path {
+  fill: red
+}
+
+
+.unlike path {
+  fill: white;
+}

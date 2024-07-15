@@ -49,7 +49,7 @@ const Post = ({ src, title, fullName, userName, body, id }: LayoutProps) => {
             <p className="mt-3 text-justify text-base">{body}</p>
             <div className=" absolute top-full -translate-y-full mb-2 flex items-center justify-between w-[90%]">
                 <TfiComments className="w-7 h-7 mb-[5px]" />
-                <FcLikePlaceholder className="w-7 h-7 mb-[5px]" style={{ fill: "red" }} />
+                <FcLikePlaceholder className="w-7 h-7 mb-[5px] like unlike" style={{ fill: "red" }} />
             </div>
         </div >
     );
