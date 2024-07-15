@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-async-client-component */
-import Post from "@/components/Post/Post";
 import PostsContainer from "@/components/PostsContainer/PostsContainer";
 import axios from "axios";
 export default async function Home() {
