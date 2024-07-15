@@ -2,17 +2,38 @@
 import { StoreContext } from "@/app/context";
 import Image from "next/image";
 import { useContext } from "react";
+type User = {
+    info: {
+        title: string;
+        first: string;
+        last: string;
+    };
+    title: string,
+    body: string,
+    pic: string,
+    id: number,
+    userId: number
+};
 
 const UserProfile = ({ params }: { params: { id: string } }) => {
     const { postsData } = useContext(StoreContext)
     // console.log(typeof params.id);
-    const userDetails = postsData.find((user) => parseInt(params.id) === user.id)
-    if (!userDetails) return <div>Not valid user</div>
+    let userDetails = postsData.find((user) => parseInt(params.id) === user.id)
+    if (!userDetails) {
+        const storedPostsData = localStorage.getItem("posts");
+        if (storedPostsData) {
+            const parsedPostsData: User[] = JSON.parse(storedPostsData);
+            userDetails = parsedPostsData.find((user) => parseInt(params.id) === user.id);
+        }
+    }
+
+    console.log(userDetails, "hey");
+
+    if (!userDetails) return <div>User not found</div>
     const { pic, info } = userDetails
 
     // console.log(params.info);
     const { first, last } = info
-    console.log(userDetails, "hey");
     return (
         <div>
             <Image src={pic} width={300} height={300} alt="random user profile picture" />

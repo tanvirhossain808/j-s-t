@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import Post from '../Post/Post';
 import { StoreContext } from '@/app/context';
+import { json } from 'stream/consumers';
 type UserDetails = {
     info: {
         title: string;
@@ -24,6 +25,8 @@ interface Posts {
 const PostsContainer = ({ postData }: Posts) => {
     console.log(postData);
     const { postsData, setPostsData } = useContext(StoreContext)
+    localStorage.getItem("posts") && localStorage.removeItem("posts")
+    localStorage.setItem("posts", JSON.stringify(postsData))
     setPostsData(postData)
     console.log(postsData, "hey");
     return (

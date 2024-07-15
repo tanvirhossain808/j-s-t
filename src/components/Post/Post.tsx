@@ -3,6 +3,9 @@ import { StoreContext } from "@/app/context";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
+import { FaComments } from "react-icons/fa";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { TfiComments } from "react-icons/tfi";
 
 type LayoutProps = {
     src: string,
@@ -20,7 +23,7 @@ const Post = ({ src, title, fullName, userName, body, id }: LayoutProps) => {
         // setPostsData([...postsData,{}])
     }, [postsData])
     return (
-        <div className="mt-4 pl-2 pr-1 bg-gray-500 py-4 rounded-lg">
+        <div className="mt-4 pl-2 pr-4 pb-10 bg-gray-500 py-4 rounded-lg hover:bg-gray-600 transition-colors relative duration-300 shadow-md hover:shadow-lg">
             <div className="flex items-center gap-4">
                 <Link href={`/profile/${id}`} className="cursor-default">
                     <div className="relative group">
@@ -43,7 +46,11 @@ const Post = ({ src, title, fullName, userName, body, id }: LayoutProps) => {
                 </div>
             </div>
             <h2 className="mt-4 text-2xl">{title}</h2>
-            <p className="mt-3 text-justify">{body}</p>
+            <p className="mt-3 text-justify text-base">{body}</p>
+            <div className=" absolute top-full -translate-y-full mb-2 flex items-center justify-between w-[90%]">
+                <TfiComments className="w-7 h-7 mb-[5px]" />
+                <FcLikePlaceholder className="w-7 h-7 mb-[5px]" style={{ fill: "red" }} />
+            </div>
         </div >
     );
 };
