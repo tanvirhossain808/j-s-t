@@ -3,7 +3,6 @@ import { StoreContext } from "@/app/context";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
-import { FaComments } from "react-icons/fa";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { TfiComments } from "react-icons/tfi";
 
