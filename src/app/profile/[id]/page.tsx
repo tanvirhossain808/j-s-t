@@ -6,8 +6,8 @@ import { useContext } from "react";
 const UserProfile = ({ params }: { params: { id: string } }) => {
     const { postsData } = useContext(StoreContext)
     // console.log(typeof params.id);
-    const userDetails = postsData.find((user) => params.id == user.id)
-    const { pic, info } = postsData.find((user) => params.id == user.id)
+    const userDetails = postsData.find((user) => parseInt(params.id) === user.id)
+    const { pic, info } = postsData.find((user) => parseInt(params.id) === user.id)
     const { first, last } = info
     console.log(userDetails, "hey");
     return (

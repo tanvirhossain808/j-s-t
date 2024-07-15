@@ -7,25 +7,33 @@ interface ContextProps {
 
 type User = {
   info: {
-    title: string;
-    first: string;
-    last: string;
-  };
-  email: string;
-  picture: {
-    large: string
-  }
+    title: string,
+    first: string,
+    last: string,
+  },
   title: string,
   body: string,
   pic: string,
-  id: number
+  id: number,
+  userId: number
 };
 interface PostsType {
   postData: User[];
 };
 
 export default function StoreProvider({ children }: ContextProps) {
-  const [postsData, setPostsData] = useState<PostsType[]>([]);
+  const [postsData, setPostsData] = useState<User[]>([{
+    info: {
+      title: "",
+      first: "",
+      last: ""
+    },
+    title: "",
+    body: "",
+    pic: "",
+    id: 0,
+    userId: 0
+  }]);
 
   const contextValue = {
     postsData,

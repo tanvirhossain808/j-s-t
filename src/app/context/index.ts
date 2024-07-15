@@ -1,32 +1,39 @@
 import { createContext } from 'react';
-import { PostData } from '../provider/ContextProvider';
 
-interface StoreContextValue {
-    postsData: PostData[];
-    setPostsData: React.Dispatch<React.SetStateAction<PostData[]>>;
-}
+
 type User = {
     info: {
         title: string;
         first: string;
         last: string;
     };
-    email: string;
-    picture: {
-        large: string
-    }
     title: string,
     body: string,
     pic: string,
-    id: number
+    id: number,
+    userId: number
 };
 interface PostsType {
     postData: User[];
 };
-
+interface StoreContextValue {
+    postsData: User[];
+    setPostsData: React.Dispatch<React.SetStateAction<User[]>>;
+}
 // Provide a default value for the context
 const defaultContextValue: StoreContextValue = {
-    postsData: [],
+    postsData: [{
+        info: {
+            title: "",
+            first: "",
+            last: ""
+        },
+        title: "",
+        body: "",
+        pic: "",
+        id: 0,
+        userId: 0
+    }],
     setPostsData: () => { }, // Provide a no-op default function
 };
 
