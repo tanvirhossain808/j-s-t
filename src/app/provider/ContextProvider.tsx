@@ -17,9 +17,9 @@ type User = {
   id: number,
   userId: number
 };
-interface PostsType {
-  postData: User[];
-};
+// interface PostsType {
+//   postData: User[];
+// };
 
 export default function StoreProvider({ children }: ContextProps) {
   const [postsData, setPostsData] = useState<User[]>([{

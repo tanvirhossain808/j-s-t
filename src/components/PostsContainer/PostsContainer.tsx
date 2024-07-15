@@ -22,6 +22,7 @@ interface Posts {
     postData: UserDetails[];
 };
 const PostsContainer = ({ postData }: Posts) => {
+    console.log(postData);
     const { postsData, setPostsData } = useContext(StoreContext)
     setPostsData(postData)
     console.log(postsData, "hey");

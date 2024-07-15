@@ -13,9 +13,9 @@ type User = {
     id: number,
     userId: number
 };
-interface PostsType {
-    postData: User[];
-};
+// interface PostsType {
+//     postData: User[];
+// };
 interface StoreContextValue {
     postsData: User[];
     setPostsData: React.Dispatch<React.SetStateAction<User[]>>;
