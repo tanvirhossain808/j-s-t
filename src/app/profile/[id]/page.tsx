@@ -19,14 +19,15 @@ const UserProfile = ({ params }: { params: { id: string } }) => {
     const { postsData } = useContext(StoreContext)
     // console.log(typeof params.id);
     let userDetails = postsData.find((user) => parseInt(params.id) === user.id)
-    if (!userDetails) {
-        const storedPostsData = localStorage.getItem("posts");
-        if (storedPostsData) {
-            const parsedPostsData: User[] = JSON.parse(storedPostsData);
-            userDetails = parsedPostsData.find((user) => parseInt(params.id) === user.id);
+    if (typeof window !== "undefined") {
+        if (!userDetails) {
+            const storedPostsData = localStorage.getItem("posts");
+            if (storedPostsData) {
+                const parsedPostsData: User[] = JSON.parse(storedPostsData);
+                userDetails = parsedPostsData.find((user) => parseInt(params.id) === user.id);
+            }
         }
     }
-
     console.log(userDetails, "hey");
 
     if (!userDetails) return <div>User not found</div>
