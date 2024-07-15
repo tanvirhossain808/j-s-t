@@ -2,7 +2,7 @@
 import { StoreContext } from "@/app/context";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { TfiComments } from "react-icons/tfi";
 
@@ -12,15 +12,77 @@ type LayoutProps = {
     fullName: string,
     userName: string,
     body: string,
-    id: number
+    id: number,
+    isLike?: boolean
 }
+type User = {
+    info: {
+        title: string;
+        first: string;
+        last: string;
+    };
+    title: string,
+    body: string,
+    pic: string,
+    id: number,
+    userId: number,
+    isLike: boolean
+};
 
-
-const Post = ({ src, title, fullName, userName, body, id }: LayoutProps) => {
+const Post = ({ src, title, fullName, userName, body, id, isLike = false }: LayoutProps) => {
+    const [showLike, setShowLike] = useState(false || isLike)
     const { setPostsData, postsData } = useContext(StoreContext)
     useEffect(() => {
         // setPostsData([...postsData,{}])
     }, [postsData])
+    const handleShowLike = () => {
+        // Toggle the showLike state
+        setShowLike(!showLike);
+
+        if (!postsData || !Array.isArray(postsData)) {
+            console.error('postsData is not defined or not an array');
+            return;
+        }
+
+        // Use the previous state of showLike to determine the new value
+        // let updatedPost
+        // if (postsData) updatedPost = postsData.reduce((pre, currentPost) => {
+        //     if (currentPost.id === id) {
+        //         // if (currentPost.info) {
+        //         console.log(currentPost.info);
+        //         // }
+        //         currentPost.isLike = !showLike
+        //         const b: User[] = [...pre, currentPost]
+        //         return b
+
+        //         // Update the isLike property for the matching post
+        //         // accumulator.push({
+        //         //     ...currentPost,
+        //         //     // isLike: !showLike,
+        //         // });
+        //     } else {
+        //         // return [...pre, currentPost]
+        //     }
+        //     return pre;
+        // }, []);
+        const updatedPost = postsData.map((post) => {
+            if (post.id === id) {
+                return {
+                    ...post, isLike: !showLike
+                }
+            }
+            return post
+        })
+        // console.log(Array.isArray(updatedPost));
+        // console.log(updatedPost.length);
+
+        // Update the postsData state and localStorage
+        if (updatedPost.length) setPostsData(updatedPost);
+
+        localStorage.setItem('posts', JSON.stringify(updatedPost));
+        console.log(updatedPost);
+    };
+
     return (
         <div className="mt-4 pl-2 pr-4 pb-10 bg-gray-500 py-4 rounded-lg hover:bg-gray-600 transition-colors relative duration-300 shadow-md hover:shadow-lg">
             <div className="flex items-center gap-4">
@@ -48,7 +110,7 @@ const Post = ({ src, title, fullName, userName, body, id }: LayoutProps) => {
             <p className="mt-3 text-justify text-base">{body}</p>
             <div className=" absolute top-full -translate-y-full mb-2 flex items-center justify-between w-[90%]">
                 <TfiComments className="w-7 h-7 mb-[5px]" />
-                <FcLikePlaceholder className="w-7 h-7 mb-[5px] like unlike" style={{ fill: "red" }} />
+                <FcLikePlaceholder className={`w-7 h-7 mb-[5px] ${showLike || isLike ? "like" : "unlike"}`} style={{ fill: "red" }} onClick={handleShowLike} />
             </div>
         </div >
     );

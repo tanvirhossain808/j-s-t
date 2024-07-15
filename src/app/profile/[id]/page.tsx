@@ -12,7 +12,8 @@ type User = {
     body: string,
     pic: string,
     id: number,
-    userId: number
+    userId: number,
+    isLike: boolean
 };
 
 const UserProfile = ({ params }: { params: { id: string } }) => {

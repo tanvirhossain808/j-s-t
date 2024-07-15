@@ -11,7 +11,8 @@ type User = {
     body: string,
     pic: string,
     id: number,
-    userId: number
+    userId: number,
+    isLike: boolean
 };
 // interface PostsType {
 //     postData: User[];
@@ -32,7 +33,8 @@ const defaultContextValue: StoreContextValue = {
         body: "",
         pic: "",
         id: 0,
-        userId: 0
+        userId: 0,
+        isLike: false
     }],
     setPostsData: () => { }, // Provide a no-op default function
 };

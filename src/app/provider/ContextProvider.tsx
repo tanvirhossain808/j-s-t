@@ -15,7 +15,8 @@ type User = {
   body: string,
   pic: string,
   id: number,
-  userId: number
+  userId: number,
+  isLike: boolean
 };
 // interface PostsType {
 //   postData: User[];
@@ -32,7 +33,8 @@ export default function StoreProvider({ children }: ContextProps) {
     body: "",
     pic: "",
     id: 0,
-    userId: 0
+    userId: 0,
+    isLike: false
   }]);
 
   const contextValue = {

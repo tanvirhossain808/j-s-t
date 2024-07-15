@@ -23,6 +23,7 @@ export default async function Home() {
     id: number;
     title: string;
     body: string;
+    isLike: boolean
   }
   type User = {
     name: {
@@ -36,6 +37,18 @@ export default async function Home() {
     }
     // Add other fields as needed
   };
+  type PostType = {
+    info: {
+      title: string;
+      first: string;
+      last: string;
+    },
+    email: string;
+    picture: {
+      large: string
+    }
+
+  }
   interface RandomUserApiResponse {
     results: User[];
     info: {
@@ -81,7 +94,8 @@ export default async function Home() {
     postData = postData?.map((data, index) => {
       return {
         ...data,
-        ...avatarData[index]
+        ...avatarData[index],
+        isLike: false
       }
     })
   }
