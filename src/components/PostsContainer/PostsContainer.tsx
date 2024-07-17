@@ -1,8 +1,9 @@
 "use client"
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Post from '../Post/Post';
 import { StoreContext } from '@/app/context';
 import { json } from 'stream/consumers';
+import Comments from '../Commetns/Comments';
 type UserDetails = {
     info: {
         title: string;
@@ -24,6 +25,8 @@ interface Posts {
     postData: UserDetails[];
 };
 const PostsContainer = ({ postData }: Posts) => {
+    const [showComments, setShowComments] = useState(false)
+    const [mouse, setMouse] = useState(0)
     // console.log(postData);
     const { postsData, setPostsData } = useContext(StoreContext)
     // useEffect(() => {
@@ -74,16 +77,29 @@ const PostsContainer = ({ postData }: Posts) => {
         // console.log(postData);
     }, [])
 
-    console.log(postsData)
+    // console.log(postsData)
+    useEffect(() => {
+        window.addEventListener("scroll", (e) => {
+            // setMouse(e)
+            // console.log(e);
+
+        })
+    }, [])
+    // { setTimeout(() => setShowComments(true), 2000) }
     // console.log(postsData);
     // console.log(postsData, "hey");
+    console.log(showComments);
     return (
-        <div className="px-10 grid grid-cols-auto gap-10 ">
-            {
-                postsData?.map((post) => <Post key={post.id} isLike={post.isLike} id={post.id} src={post.pic} title={post?.title} body={post.body} fullName={post?.info?.first + " " + post?.info?.last} userName={post?.info?.first} />
-                )
-            }
-        </div>
+        <>
+            {/* <div></div> */}
+            {/* <Comments isOpen={showComments} onClose={setShowComments}/> */}
+            <div className="px-10 grid grid-cols-auto gap-10 relative]">
+                {
+                    postsData?.map((post) => <Post userId={post.userId} key={post.id} isLike={post.isLike} id={post.id} src={post.pic} title={post?.title} body={post.body} fullName={post?.info?.first + " " + post?.info?.last} userName={post?.info?.first} />
+                    )
+                }
+            </div>
+        </>
     );
 };
 

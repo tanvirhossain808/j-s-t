@@ -18,6 +18,12 @@ type User = {
   userId: number,
   isLike: boolean
 };
+interface Comments {
+  postId: number,
+  id: number,
+  name: string,
+  body: string
+}
 // interface PostsType {
 //   postData: User[];
 // };
@@ -36,10 +42,13 @@ export default function StoreProvider({ children }: ContextProps) {
     userId: 0,
     isLike: false
   }]);
+  const [comments, setComments] = useState<Comments[][]>([])
 
   const contextValue = {
     postsData,
     setPostsData,
+    comments,
+    setComments
   };
 
   return (

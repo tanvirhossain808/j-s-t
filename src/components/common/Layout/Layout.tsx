@@ -16,7 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <Header />
                 <StoreProvider >
                     <div className="flex-grow ">
-                        <main className="">
+                        <main className="o overflow-y-hidden">
                             {children}
                         </main>
                     </div>
