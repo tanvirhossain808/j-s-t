@@ -8,7 +8,7 @@ import { RiAdminLine } from "react-icons/ri";
 
 const Header = () => {
     return (
-        <div className="sticky h-screen pl-4 top-0 basis-32 md:basis-40 flex-shrink-0 max-w-[200px] flex flex-col justify-around bg-gray-400">
+        <div className="sticky h-screen pl-4 top-0 basis-20 sm:basis-40 flex-shrink-0 max-w-[200px] flex flex-col justify-around bg-gray-400">
             <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <IoHomeSharp className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Home</p>

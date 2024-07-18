@@ -20,7 +20,10 @@ const config: Config = {
       gridTemplateColumns: {
         "auto": 'repeat(auto-fill, minmax(300px, 1fr))',
         "sm-auto": 'repeat(auto-fill, minmax(200px, 1fr))',
-      }
+      },
+      screens: {
+        'xs': '300px',
+      },
     },
   },
   plugins: [],

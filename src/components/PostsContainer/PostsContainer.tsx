@@ -37,7 +37,7 @@ const PostsContainer = ({ postData }: Posts) => {
     }, [])
 
 
-    return (<div className="px-10 grid grid-cols-auto gap-10 relative">
+    return (<div className="grid-cols-sm-auto px-5 grid sm:grid-cols-auto sm:px-10 gap-5  sm:gap-10 relative">
         {
             postsData?.map((post) => <Post userId={post.userId} key={post.id} isLike={post.isLike} id={post.id} src={post.pic} title={post?.title} body={post.body} fullName={post?.info?.first + " " + post?.info?.last} userName={post?.info?.first} />
             )

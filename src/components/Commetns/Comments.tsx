@@ -166,10 +166,10 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
             </div>
             <div className={`max-h-[80vh] w-full overflow-y-auto`} >
                 <>
-                    <div className='px-10 mt-20'>
+                    <div className='px-2 sm:px-10 mt-20'>
                         {
                             commentsContainer.length >= 1 && commentsContainer.map((comments) => comments.map((comment, index) => {
-                                return (<div key={index} className='text-red-600 flex w-full gap-5 items-center mt-4 bg-gray-600 p-5 rounded-lg'>
+                                return (<div key={index} className='text-red-600 flex w-full flex-col sm:flex-row gap-5 items-center mt-4 bg-gray-600 p-5 rounded-lg'>
                                     <Image className='w-20 h-20 rounded-full inline-block' src={"https://randomuser.me/api/portraits/men/81.jpg"} alt="comment user name" width={100} height={100} />
                                     <div className=' text-white text-base'>
                                         <h2 className='text-black text-xl'>{"Jack"}</h2>
@@ -185,15 +185,15 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
                 </>
             </div>
             <div className='bg-gray-800 h-12 flex items-center relative'>
-                <input type="text" className='placeholder-white text-inherit w-full outline-none px-10 text-white bg-gray-400 h-full rounded-2xl' placeholder='Type your your comment' value={commentsList.body} onChange={(e) => setCommentsList({ ...commentsList, body: e.target.value, id: Date.now() })} />
+                <input type="text" className='placeholder-white text-inherit w-full outline-none px-1 xm:px-10 text-white bg-gray-400 h-full rounded-2xl text-[10px]' placeholder='Type your your comment' value={commentsList.body} onChange={(e) => setCommentsList({ ...commentsList, body: e.target.value, id: Date.now() })} />
                 {
-                    isLoading ? <button type="button" className="relative bg-black text-white py-2 px-4 rounded-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    isLoading ? <button type="button" className="relative bg-black text-white py-2 px-1 sm:px-4 rounded-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
                         <svg className={`overflow-hidden animate-spin h-5 w-5 ${"disabled" ? 'text-white' : 'text-gray-500'}`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <circle className="opacity-100 stroke-current" cx="12" cy="12" r="10" strokeWidth="4" fill="none" strokeLinecap="round" stroke="red" />
                             <line x1="12" y1="2" x2="2" y2="6" stroke="red" strokeWidth="4" strokeLinecap="round" />
                         </svg>
                         Comment...
-                    </button> : <button className='block bg-black hover:bg-slate-700 duration-100 text-white absolute right-0 top-0 h-full rounded-xl px-4 -translate-x-2' onClick={handleSubmitComment}>
+                    </button> : <button className='block bg-black hover:bg-slate-700 duration-100 text-white absolute right-0 top-0 h-full rounded-xl px-0 sm:px-4 sm:-translate-x-2' onClick={handleSubmitComment}>
                         Comment
                     </button>
                 }
