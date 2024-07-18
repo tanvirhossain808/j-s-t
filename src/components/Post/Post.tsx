@@ -16,23 +16,7 @@ type LayoutProps = {
     id: number,
     isLike?: boolean,
     userId: number,
-    // showComments: React.Dispatch<React.SetStateAction<boolean>>;
-    // showCommentsBox: boolean
-
 }
-type User = {
-    info: {
-        title: string;
-        first: string;
-        last: string;
-    };
-    title: string,
-    body: string,
-    pic: string,
-    id: number,
-    userId?: number,
-    isLike: boolean,
-};
 
 const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId }: LayoutProps) => {
     const [showComments, setShowComments] = useState(false)
@@ -51,28 +35,6 @@ const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId
             console.error('postsData is not defined or not an array');
             return;
         }
-
-        // Use the previous state of showLike to determine the new value
-        // let updatedPost
-        // if (postsData) updatedPost = postsData.reduce((pre, currentPost) => {
-        //     if (currentPost.id === id) {
-        //         // if (currentPost.info) {
-        //         console.log(currentPost.info);
-        //         // }
-        //         currentPost.isLike = !showLike
-        //         const b: User[] = [...pre, currentPost]
-        //         return b
-
-        //         // Update the isLike property for the matching post
-        //         // accumulator.push({
-        //         //     ...currentPost,
-        //         //     // isLike: !showLike,
-        //         // });
-        //     } else {
-        //         // return [...pre, currentPost]
-        //     }
-        //     return pre;
-        // }, []);
         const updatedPost = postsData.map((post) => {
             if (post.id === id) {
                 return {
@@ -81,10 +43,6 @@ const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId
             }
             return post
         })
-        // console.log(Array.isArray(updatedPost));
-        // console.log(updatedPost.length);
-
-        // Update the postsData state and localStorage
         if (updatedPost.length) setPostsData(updatedPost);
 
         localStorage.setItem('posts', JSON.stringify(updatedPost));
@@ -95,8 +53,7 @@ const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId
         <>
             {showComments && <Comments isOpen={showComments} onClose={setShowComments} userId={userId} id={id} name={userName} />
             }
-            {/* {showCommentsBox && <Comments setShowCommentsBox={setShowCommentsBox} />} */}
-            <div className={`mt-4 pl-2 pr-4 pb-10 bg-gray-500 py-4 rounded-lg hover:bg-gray-600 transition-colors relative duration-300 shadow-md hover:shadow-lg`}>
+            {src && <div className={`mt-4 pl-2 pr-4 pb-10 bg-gray-500 py-4 rounded-lg hover:bg-gray-600 transition-colors relative duration-300 shadow-md hover:shadow-lg`}>
                 <div className="flex items-center gap-4">
                     <Link href={`/profile/${id}`} className="cursor-default">
                         <div className="relative group">
@@ -125,7 +82,8 @@ const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId
                     <FcLikePlaceholder className={`w-7 h-7 mb-[5px] cursor-pointer ${showLike || isLike ? "like" : "unlike"}`} style={{ fill: "red" }} onClick={handleShowLike} />
                 </div>
             </div >
-        </>
+            }  </>
+
     );
 };
 

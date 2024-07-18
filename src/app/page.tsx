@@ -2,22 +2,6 @@
 import PostsContainer from "@/components/PostsContainer/PostsContainer";
 import axios from "axios";
 export default async function Home() {
-  type UserDetails = {
-    info: {
-      title: string;
-      first: string;
-      last: string;
-    };
-    // email: string;
-    // picture: {
-    //     large: string
-    // }
-    title: string,
-    body: string,
-    pic: string,
-    id: number,
-    userId: number,
-  };
   interface Post {
     userId: number;
     id: number;
@@ -35,20 +19,8 @@ export default async function Home() {
     picture: {
       large: string
     }
-    // Add other fields as needed
   };
-  type PostType = {
-    info: {
-      title: string;
-      first: string;
-      last: string;
-    },
-    email: string;
-    picture: {
-      large: string
-    }
 
-  }
   interface RandomUserApiResponse {
     results: User[];
     info: {
@@ -99,17 +71,10 @@ export default async function Home() {
       }
     })
   }
-  // console.log(postData);
 
   return (
     <>
       <PostsContainer postData={[...(postData || [])]} />
-      {/* <div className="px-10 grid grid-cols-auto gap-10 ">
-        {
-          postData?.map((post) => <Post key={post.id} src={post.pic} title={post?.title} body={post.body} fullName={post?.info?.first + " " + post?.info?.last} userName={post?.info?.first} />
-          )
-        }
-      </div> */}
     </>
   );
 }

@@ -14,27 +14,27 @@ const Header = () => {
                 <p className="hidden md:block">Home</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Home</p>
             </Link>
-            <Link href="/profile" className="flex gap-4 items-center relative tooltipContainer">
+            <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <RiAdminLine className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Profile</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Profile</p>
             </Link>
-            <Link href="/post" className="flex gap-4 items-center relative tooltipContainer">
+            <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <MdPostAdd className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Create Post</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Post</p>
             </Link>
-            <Link href="/logout" className="flex gap-4 items-center relative tooltipContainer">
+            <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <AiOutlineLogin className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Log out</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Log out</p>
             </Link>
-            <Link href="/login" className="flex gap-4 items-center relative tooltipContainer">
+            <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <CiLogout className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Log in</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Log in</p>
             </Link>
-            <Link href="/singup" className="flex gap-4 items-center relative tooltipContainer">
+            <Link href="/" className="flex gap-4 items-center relative tooltipContainer">
                 <IoIosLogIn className="w-5 text-3xl " fill="white" />
                 <p className="hidden md:block">Sign up</p>
                 <p className="md:hidden absolute text-nowrap text-[14px] px-4 rounded-full tooltip left-1/4 bg-gray-900">Sign up</p>

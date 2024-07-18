@@ -4,6 +4,8 @@ import { StoreContext } from '@/app/context';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ModalProps {
     isOpen: boolean;
@@ -36,16 +38,12 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
     const { comments: commentsContainer, setComments } = useContext(StoreContext);
     const handleSubmitComment = async () => {
         await setIsLoading(true);
-        console.log("uganda");
-
         try {
             let updatedComments = [...commentsContainer];
             updatedComments.find((comments, i) => {
                 return comments.find(async (comment, j) => {
                     if (comment.postId === id) {
                         if (Array.isArray(updatedComments[i])) {
-                            console.log("hey");
-
                             await updatedComments[i].push(commentsList);
                             return true;
                         }
@@ -53,11 +51,32 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
                 });
             });
 
-            () => setComments(updatedComments)
-            console.log(updatedComments, "updatedComments");
+            await setComments(updatedComments)
+            await setIsLoading(false)
+            toast("Comment posted successfully!"
+                , {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                });
+
 
         } catch (error) {
-            console.error("Error submitting comment:", error);
+            // console.error("Error submitting comment:", error);
+            toast("Unable to submit the comment!"
+                , {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                });
         } finally {
             await setTimeout(() => setIsLoading(false), 3000)
         }
@@ -73,6 +92,9 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
             try {
                 const { data: comments } = await axios.post("api/postComments", { id })
                 let newComments = [...commentsContainer]
+                /* 
+                start todo-:need to more higher work 
+                */
                 if (commentsContainer.length >= 1 && commentsContainer[0][0]?.id) {
                     let isAlreadyExits = false
                     newComments = commentsContainer.map((commentArray, index) => {
@@ -93,7 +115,10 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
                 else {
                     newComments = [...commentsContainer, comments]
                 }
-                setComments(newComments)
+                /* 
+                end:todo need to more higher work end
+                */
+                setComments([comments])
             }
             catch (error) {
                 console.log(error)
@@ -102,7 +127,7 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
         isOpen && showCommentList();
 
 
-        console.log(commentsContainer, "gk");
+        // console.log(commentsContainer, "gk");
         return () => {
             // showCommentList()
             document.body.style.overflow = 'auto';
@@ -118,8 +143,6 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id,
         };
     }, []);
 
-
-    console.log(isLoading, "isloading")
     if (commentsContainer.length >= 1) return <div
         className={`fixed inset-0 flex items-center justify-center z-10 transition-opacity duration-300 ${isOpen ? 'fade-in' : 'opacity-0 invisible'
             }`}
