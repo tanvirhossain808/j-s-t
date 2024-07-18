@@ -1,6 +1,7 @@
 "use client";
 
 import { StoreContext } from '@/app/context';
+import axios from 'axios';
 import Image from 'next/image';
 import React, { useContext, useEffect, useState } from 'react';
 
@@ -10,6 +11,7 @@ interface ModalProps {
     children?: React.ReactNode;
     userId?: number;
     id: number;
+    name: string
 }
 interface CommentType {
     postId: number;
@@ -17,11 +19,12 @@ interface CommentType {
     name: string;
     email: string;
     body: string;
+
 }
 
-const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id }) => {
-    // const {}=useContext(StoreContext)
-    const [commentsList, setCommentsList] = useState<CommentType[]>([
+const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id, name }) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [commentsList, setCommentsList] = useState<CommentType>(
         {
             postId: 0,
             id: 0,
@@ -29,9 +32,36 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
             email: '',
             body: ""
         }
-    ]);
+    );
     const { comments: commentsContainer, setComments } = useContext(StoreContext);
-    // console.log(comments);
+    const handleSubmitComment = async () => {
+        await setIsLoading(true);
+        console.log("uganda");
+
+        try {
+            let updatedComments = [...commentsContainer];
+            updatedComments.find((comments, i) => {
+                return comments.find(async (comment, j) => {
+                    if (comment.postId === id) {
+                        if (Array.isArray(updatedComments[i])) {
+                            console.log("hey");
+
+                            await updatedComments[i].push(commentsList);
+                            return true;
+                        }
+                    }
+                });
+            });
+
+            () => setComments(updatedComments)
+            console.log(updatedComments, "updatedComments");
+
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+        } finally {
+            await setTimeout(() => setIsLoading(false), 3000)
+        }
+    };
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -40,55 +70,34 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
         }
 
         const showCommentList = async () => {
-            const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
-            const comments = await res.json();
-            const k = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`).then((res) => res.json()).then(data => data);
-            // console.log(k, "k");
-            console.log(comments, "k");
-            // console.log(comments);
-            // if (!commentsContainer[0][0].id) {
-            //     const isExitCommentsList = commentsContainer.map((data) => data.find((comment) => {
-            //         if (comment.id === comments.postId) {
-            //             return {
-            //                 ...comment,
-            //                 ...comments
-            //             }
-            //         }
-            //     }))
-            // }
-            let newComments = [...commentsContainer]
-            // console.log(Comments);
-            // console.log(commentsContainer[0]);
-            if (commentsContainer.length >= 1 && commentsContainer[0][0]?.id) {
-                let isAlreadyExits = false
-                newComments = commentsContainer.map((commentArray, index) => {
-                    if (commentArray.some((comment) => comment.postId === comments[0].postId)) {
-                        console.log("hey");
-                        // console.log(comment)
-                        isAlreadyExits = true
-                        // newComments[index].push(...comments)
-                        return [
-                            ...commentArray,
-                            ...comments
-                        ];
-                    } else {
-                        return commentArray
+            try {
+                const { data: comments } = await axios.post("api/postComments", { id })
+                let newComments = [...commentsContainer]
+                if (commentsContainer.length >= 1 && commentsContainer[0][0]?.id) {
+                    let isAlreadyExits = false
+                    newComments = commentsContainer.map((commentArray, index) => {
+                        if (commentArray.some((comment) => comment.postId === comments[0].postId) && !isAlreadyExits) {
+                            isAlreadyExits = true
+                            return [
+                                ...commentArray,
+                                ...comments
+                            ];
+                        } else {
+                            return commentArray
+                        }
+                    });
+                    if (!isAlreadyExits) {
+                        newComments.push(comments)
                     }
-                });
-                if (!isAlreadyExits) {
-                    newComments.push(comments)
                 }
-
-                // setComments(newComments);
-                // newComments = []
+                else {
+                    newComments = [...commentsContainer, comments]
+                }
+                setComments(newComments)
             }
-            else {
-                newComments = [...commentsContainer, comments]
+            catch (error) {
+                console.log(error)
             }
-
-            console.log(comments, "comments");
-            // setCommentsList(comments);
-            setComments(newComments)
         };
         isOpen && showCommentList();
 
@@ -97,7 +106,7 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
         return () => {
             // showCommentList()
             document.body.style.overflow = 'auto';
-            setCommentsList([
+            setCommentsList(
                 {
                     postId: 0,
                     id: 0,
@@ -105,61 +114,12 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
                     email: '',
                     body: ""
                 }
-            ]);
+            );
         };
     }, []);
-    // useEffect(() => {
-    //     if (isOpen) {
-    //         document.body.style.overflow = 'hidden';
-    //     } else {
-    //         document.body.style.overflow = 'auto';
-    //     }
 
-    //     const showCommentList = async () => {
-    //         try {
-    //             const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
-    //             const comments = await res.json();
 
-    //             let newCommentsContainer = [...commentsContainer];
-    //             let postExists = false;
-
-    //             if (newCommentsContainer.length >= 1 && newCommentsContainer[0][0]?.id) {
-    //                 newCommentsContainer = newCommentsContainer.map((commentArray) => {
-    //                     if (commentArray.some((comment) => comment.postId === id)) {
-    //                         postExists = true;
-    //                         return [
-    //                             ...commentArray,
-    //                             ...comments
-    //                         ];
-    //                     } else {
-    //                         return commentArray;
-    //                     }
-    //                 });
-
-    //                 if (!postExists) {
-    //                     newCommentsContainer.push(comments);
-    //                 }
-    //             } else {
-    //                 newCommentsContainer = [...commentsContainer, comments];
-    //             }
-
-    //             setComments(newCommentsContainer);
-    //         } catch (error) {
-    //             console.error('Error fetching comments:', error);
-    //         }
-    //     };
-
-    //     if (isOpen) {
-    //         showCommentList();
-    //     }
-
-    //     return () => {
-    //         document.body.style.overflow = 'auto';
-    //         setCommentsList([]);
-    //     };
-    // }, [isOpen, id]);
-    console.log(commentsContainer, "commentContainer");
-
+    console.log(isLoading, "isloading")
     if (commentsContainer.length >= 1) return <div
         className={`fixed inset-0 flex items-center justify-center z-10 transition-opacity duration-300 ${isOpen ? 'fade-in' : 'opacity-0 invisible'
             }`}
@@ -170,29 +130,23 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
             onClick={() => onClose(false)}
         ></div>
         <div
-            className={`bg-white max-h-[80vh] w-[50%] overflow-y-auto p-4 rounded shadow-lg z-20 transform transition-transform duration-300 ${isOpen ? 'scale-up' : 'scale-95 translate-y-4'
+            className={` bg-gray-400 w-[50%] rounded relative shadow-lg z-20 transform transition-transform duration-300 ${isOpen ? 'scale-up' : 'scale-95 translate-y-4'
                 }`}
         >
-            <>
-
-                {/* {[...Array(20)].map((_, i) => (
-                        <p key={i} className="mt-2 text-red-400">
-                            This is line {i + 1} of the modal content.
-                        </p>
-                    ))} */}
-
-                <div>
-                    {
-                        commentsContainer.length >= 1 && commentsContainer.map((comments) => comments.map((comment) => {
-                            // const user = async () => {
-                            //     const res = await fetch("https://randomuser.me/")
-                            //     const data = await res.json()
-                            //     return user
-
-                            // }
-                            // const data = user()
-                            return <>
-                                <div className='text-red-600 flex w-full gap-5 items-center mt-4 bg-gray-600 p-5 rounded-lg'>
+            <div className='bg-gray-900 fixed py-8 top-0 right-0 h-10 w-full flex items-center justify-center'>
+                <p className='text-white flex-1 text-xl text-center'>{`${name}'s post`}</p>
+                <div className='flex-1 pr-4'>
+                    <button onClick={() => onClose(false)} className="block px-4 py-2 bg-red-500 duration-500 hover:bg-red-400 ml-auto text-white rounded">
+                        Close
+                    </button>
+                </div>
+            </div>
+            <div className={`max-h-[80vh] w-full overflow-y-auto`} >
+                <>
+                    <div className='px-10 mt-20'>
+                        {
+                            commentsContainer.length >= 1 && commentsContainer.map((comments) => comments.map((comment, index) => {
+                                return (<div key={index} className='text-red-600 flex w-full gap-5 items-center mt-4 bg-gray-600 p-5 rounded-lg'>
                                     <Image className='w-20 h-20 rounded-full inline-block' src={"https://randomuser.me/api/portraits/men/81.jpg"} alt="comment user name" width={100} height={100} />
                                     <div className=' text-white text-base'>
                                         <h2 className='text-black text-xl'>{"Jack"}</h2>
@@ -200,20 +154,27 @@ const Comments: React.FC<ModalProps> = ({ isOpen, onClose, children, userId, id 
                                             {comment.body}
                                         </p>
                                     </div>
-
-                                </div>
-                            </>
+                                </div>)
+                            }
+                            ))
                         }
-                        ))
-                    }
-                </div>
-
-            </>
-
-            {/* // {children} */}
-            <button onClick={() => onClose(false)} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
-                Close
-            </button>
+                    </div>
+                </>
+            </div>
+            <div className='bg-gray-800 h-12 flex items-center relative'>
+                <input type="text" className='placeholder-white text-inherit w-full outline-none px-10 text-white bg-gray-400 h-full rounded-2xl' placeholder='Type your your comment' value={commentsList.body} onChange={(e) => setCommentsList({ ...commentsList, body: e.target.value, id: Date.now() })} />
+                {
+                    isLoading ? <button type="button" className="relative bg-black text-white py-2 px-4 rounded-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg className={`overflow-hidden animate-spin h-5 w-5 ${"disabled" ? 'text-white' : 'text-gray-500'}`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle className="opacity-100 stroke-current" cx="12" cy="12" r="10" strokeWidth="4" fill="none" strokeLinecap="round" stroke="red" />
+                            <line x1="12" y1="2" x2="2" y2="6" stroke="red" strokeWidth="4" strokeLinecap="round" />
+                        </svg>
+                        Comment...
+                    </button> : <button className='block bg-black hover:bg-slate-700 duration-100 text-white absolute right-0 top-0 h-full rounded-xl px-4 -translate-x-2' onClick={handleSubmitComment}>
+                        Comment
+                    </button>
+                }
+            </div>
         </div>
     </div >
         ;

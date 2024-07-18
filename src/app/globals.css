@@ -113,3 +113,7 @@ html {
 .scale-up {
   animation: scaleUp 0.3s forwards;
 }
+
+.loading path {
+  fill: white;
+}

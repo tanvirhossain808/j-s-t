@@ -93,7 +93,7 @@ const Post = ({ src, title, fullName, userName, body, id, isLike = false, userId
 
     return (
         <>
-            {showComments && <Comments isOpen={showComments} onClose={setShowComments} userId={userId} id={id} />
+            {showComments && <Comments isOpen={showComments} onClose={setShowComments} userId={userId} id={id} name={userName} />
             }
             {/* {showCommentsBox && <Comments setShowCommentsBox={setShowCommentsBox} />} */}
             <div className={`mt-4 pl-2 pr-4 pb-10 bg-gray-500 py-4 rounded-lg hover:bg-gray-600 transition-colors relative duration-300 shadow-md hover:shadow-lg`}>
