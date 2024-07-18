@@ -18,7 +18,8 @@ const config: Config = {
         "MontserratAlternates-Bold": ["MontserratAlternates-Bold", "sans-serif"]
       },
       gridTemplateColumns: {
-        "auto": 'repeat(auto-fill, minmax(300px, 1fr))'
+        "auto": 'repeat(auto-fill, minmax(300px, 1fr))',
+        "sm-auto": 'repeat(auto-fill, minmax(200px, 1fr))',
       }
     },
   },

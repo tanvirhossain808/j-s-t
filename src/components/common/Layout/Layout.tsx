@@ -12,8 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
     return (
         <>
 
-
-            <div className="flex">
+            <div className="flex max-h-screen overflow-y-scroll">
                 <Header />
                 <StoreProvider >
 
